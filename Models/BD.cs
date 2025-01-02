@@ -3,7 +3,7 @@ using System;
 using Dapper;
 using System.Data;
 public class BD{
-private static string _connectionString = @"Server=CONTROL\SQL_PUMP;database=PUMPCO;uid=Lectura;pwd=PublicUser102938*";
+private static string _connectionString = @"Server=CONTROL\SQL_PUMP;database=PUMPCO;uid=Lectura;pwd=PublicUser102938*;Trusted_Connection=False;TrustServerCertificate=True;";
     public static List<string> _listaNombreProductos = new List<string>();
     public static List<string> ListaBusquedaNombProdu(int tipoBusqueda, string textoBusqueda, string codigo)
     {
