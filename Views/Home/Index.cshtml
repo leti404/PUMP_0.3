@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <!-- Formulario de búsqueda -->
+    <form action='@Url.Action("Busqueda")' asp-action="Buscar" method="get">
+        <div class="seleccion" id="searchSelection">
+            <label for="search-by">Buscar por:</label>
+            <select asp-for="tipoBusqueda" class="inputdatos" id="search-by" onchange="toggleAdditionalFields()" required>
+                <option value="1" selected>Descripción</option>
+                <option value="2">Código</option>
+                <option value="3">Código Reducido</option>
+                <option value="4">Código del Fabricante</option>
+                <option value="5">Fabricante</option>
+            </select>
+            
+            <div id="additionalFields"></div>
+            
+            <label for="textoBusqueda">Palabras clave:</label>
+            <input asp-for="textoBusqueda" type="text" class="inputdatos" id="textoBusqueda" placeholder="Palabras clave...">
+            
+            <div class="button-container">
+                <button type="submit" class="search-button">BUSCAR</button>
+            </div>
+        </div>
+    </form>
+
+
+
+    <div class="results-section">
+    <label for="results">Resultados encontrados: @ViewBag.CountResEncont</label>
+
+    <form method="post" action="@Url.Action("ProcessLastPart", "Home")">
+        <select id="results" name="selectedProduct" onchange="this.form.submit()">
+            @foreach (string producto in ViewBag.ListaNombresProduBusqueda)
+            {
+                <option value="@producto">@producto</option>
+            }
+        </select>
+    </form>
+
+    <p id="result"></p>
+
+        @if (@ViewBag.CountResEncont > 0)
+        {
+            <a href='@Url.Action("Tabla", "Home")'>
+                <button class="btn">TABLA</button>
+            </a>
+        }
+        else
+        {
+
+        }
+    </div>
+
+    <div class="form-container">
+        <div class="form-group">
+            <label>Tipo</label>
+            <div class="input-block">@ViewBag.Producto.TIPO</div>
+            <label>Código</label>
+            <div class="input-block">@ViewBag.Producto.CODIGO</div>
+            <label>Stock en Depósito</label>
+            <div class="input-block">@ViewBag.Producto.STOCK</div>
+            <button class="btn small">Formula</button>
+            <button class="btn small">Seg de Formula</button>
+        </div>
+        <div class="form-group">
+            <label>Código Reducido</label>
+            <div class="input-block">@ViewBag.Producto.CODREDUCIDO</div>
+        </div>
+        <div class="form-group">
+            <label>Descripción</label>
+            <div class="input-block">@ViewBag.Producto.DESCRIPCION</div>
+        </div>
+        <div class="form-group">
+            <label>Código del Fabricante</label>
+            <div class="input-block">@ViewBag.Producto.CODIFAB</div>
+        </div>
+        <div class="form-group">
+            <label>Fabricante</label>
+            <div class="input-block">@ViewBag.Producto.NOMBFAB</div>
+        </div>
+    </div>
+
+    <div class="imgProdu">
+        <img src="@ViewBag.Producto.FOTO" alt="@ViewBag.Producto.DESCRIPCION">
+    </div>
+
+    @if(@ViewBag.Producto.APTOVENTA == 'N')
+    {
+        <div class="status-section">
+            <p class="not-for-sale">NO APTO PARA LA VENTA</p>
+            <div class="placeholder"></div>
+        </div>
+    }
+</div>

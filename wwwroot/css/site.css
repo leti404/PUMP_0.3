@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+.container {
+  background-color: #fff;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 60%;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #0092d1;
+  padding-bottom: 10px;
+}
+
+.logo img{
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1.5em;
+  letter-spacing: 2px;
+  width: 250px;
+  height: auto;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar input, 
+.search-bar select,
+.search-bar button {
+  padding: 8px;
+  border: 1px solid #0092d1; /* Blue border */
+  border-radius: 8px;
+}
+
+.search-bar button {
+  background-color: #0092d1;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #ff8c00; /* Orange hover */
+}
+
+/* Results Section */
+.results-section {
+  margin: 10px 0;
+}
+
+.results-section select, 
+.results-section button {
+  padding: 6px;
+  border: 1px solid #0092d1;
+  border-radius: 8px;
+}
+
+.results-section button {
+  background-color: #0092d1;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.results-section button:hover {
+  background-color: #ff8c00;
+}
+
+/* Form Section */
+.form-container {
+  background: #f8f8f8;
+  border: 2px solid #0092d1;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #0092d1; /* Blue text */
+}
+
+.form-group input, 
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #0092d1;
+  border-radius: 8px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  height: 80px;
+}
+
+.btn.small {
+  padding: 6px 8px;
+  font-size: 0.9em;
+  background-color: #0092d1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  margin: 5px;
+}
+
+.btn.small:hover {
+  background-color: #ff8c00;
+}
+
+.status-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.not-for-sale {
+  color: #ff4d4d;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.placeholder {
+  height: 120px;
+  border: 2px dashed #0092d1;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
