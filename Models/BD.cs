@@ -3,7 +3,7 @@ using System;
 using Dapper;
 using System.Data;
 public class BD{
-private static string _connectionString = @"Server=localhost; DataBase=PUMPCO;Trusted_Connection=True;";
+private static string _connectionString = @"Server=CONTROL\SQL_PUMP;database=PUMPCO;uid=Lectura;pwd=PublicUser102938*";
     public static List<string> _listaNombreProductos = new List<string>();
     public static List<string> ListaBusquedaNombProdu(int tipoBusqueda, string textoBusqueda, string codigo)
     {
@@ -12,16 +12,15 @@ private static string _connectionString = @"Server=localhost; DataBase=PUMPCO;Tr
             case 1:
                 using(SqlConnection PUMPCO = new SqlConnection(_connectionString))
                 {
-                    string sql = "select concat(CAST(STMPDH_DESCRP AS NVARCHAR(MAX)),'- ', STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (STMPDH_DESCRP  IS NOT NULL) And ((STMPDH_DESCRP COLLATE Latin1_General_CI_AI Like '%@TextoBusqueda%' )  or ( USR_STMPDH_NOTTEC  COLLATE Latin1_General_CI_AI Like '%@TextoBusqueda%' ))  ORDER BY CAST( STMPDH_DESCRP  AS NVARCHAR(MAX)) ASC ";
-                    PUMPCO.Execute(sql, new{TextoBusqueda = textoBusqueda}); 
-                    _listaNombreProductos = PUMPCO.Query<string>(sql).ToList();
+                    string sql = "select concat(CAST(STMPDH_DESCRP AS NVARCHAR(MAX)),'- ', STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (STMPDH_DESCRP  IS NOT NULL) And ((STMPDH_DESCRP COLLATE Latin1_General_CI_AI Like '@TextoBusqueda' )  or ( USR_STMPDH_NOTTEC  COLLATE Latin1_General_CI_AI Like '@TextoBusqueda' ))  ORDER BY CAST( STMPDH_DESCRP  AS NVARCHAR(MAX)) ASC ";
+                    _listaNombreProductos = PUMPCO.Query<string>(sql, new {TextoBusqueda = textoBusqueda}).ToList();
                 }
             break;
 
             case 2:
                 using(SqlConnection PUMPCO = new SqlConnection(_connectionString))
                 {
-                    string sql = "select concat(STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (STMPDH_ARTCOD  IS NOT NULL)AND STMPDH_TIPPRO = '@Codigo' And (replace(replace ((STMPDH_ARTCOD COLLATE Latin1_General_CI_AI),'/',''),'-','' )Like '%@TextoBusqueda%' )  ORDER BY CAST( STMPDH_ARTCOD  AS NVARCHAR(MAX)) ASC ";
+                    string sql = "select concat(STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (STMPDH_ARTCOD  IS NOT NULL)AND STMPDH_TIPPRO = '@Codigo' And (replace(replace ((STMPDH_ARTCOD COLLATE Latin1_General_CI_AI),'/',''),'-','' )Like '@TextoBusqueda' )  ORDER BY CAST( STMPDH_ARTCOD  AS NVARCHAR(MAX)) ASC ";
                     PUMPCO.Execute(sql, new{Codigo = codigo, TextoBusqueda = textoBusqueda}); 
                     _listaNombreProductos = PUMPCO.Query<string>(sql).ToList();
                 }
@@ -30,7 +29,7 @@ private static string _connectionString = @"Server=localhost; DataBase=PUMPCO;Tr
             case 3:
                 using(SqlConnection PUMPCO = new SqlConnection(_connectionString))
                 {
-                    string sql = "select concat(CAST(STMPDH_INDCOD AS NVARCHAR(MAX)),'- ', STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (STMPDH_INDCOD  IS NOT NULL) And (STMPDH_INDCOD COLLATE Latin1_General_CI_AI Like '%@TextoBusqueda%' )  ORDER BY CAST( STMPDH_INDCOD  AS NVARCHAR(MAX)) ASC ";
+                    string sql = "select concat(CAST(STMPDH_INDCOD AS NVARCHAR(MAX)),'- ', STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (STMPDH_INDCOD  IS NOT NULL) And (STMPDH_INDCOD COLLATE Latin1_General_CI_AI Like '@TextoBusqueda' )  ORDER BY CAST( STMPDH_INDCOD  AS NVARCHAR(MAX)) ASC ";
                     PUMPCO.Execute(sql, new{TextoBusqueda = textoBusqueda}); 
                     _listaNombreProductos = PUMPCO.Query<string>(sql).ToList();
                 }
@@ -39,7 +38,7 @@ private static string _connectionString = @"Server=localhost; DataBase=PUMPCO;Tr
             case 4:
                 using(SqlConnection PUMPCO = new SqlConnection(_connectionString))
                 {
-                    string sql = "select concat(CAST(USR_STMPDH_CODFAB AS NVARCHAR(MAX)),'- ', STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (USR_STMPDH_CODFAB  IS NOT NULL) And (USR_STMPDH_CODFAB COLLATE Latin1_General_CI_AI Like '%@TextoBusqueda%' )  ORDER BY CAST( USR_STMPDH_CODFAB  AS NVARCHAR(MAX)) ASC ";
+                    string sql = "select concat(CAST(USR_STMPDH_CODFAB AS NVARCHAR(MAX)),'- ', STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (USR_STMPDH_CODFAB  IS NOT NULL) And (USR_STMPDH_CODFAB COLLATE Latin1_General_CI_AI Like '@TextoBusqueda' )  ORDER BY CAST( USR_STMPDH_CODFAB  AS NVARCHAR(MAX)) ASC ";
                     PUMPCO.Execute(sql, new{TextoBusqueda = textoBusqueda}); 
                     _listaNombreProductos = PUMPCO.Query<string>(sql).ToList();
                 }
@@ -48,7 +47,7 @@ private static string _connectionString = @"Server=localhost; DataBase=PUMPCO;Tr
             case 5:
                 using(SqlConnection PUMPCO = new SqlConnection(_connectionString))
                 {
-                    string sql = "select concat(USR_CODFAB_DESCRI ,'- ', CAST(STMPDH_DESCRP AS NVARCHAR(MAX)) ,'- ', STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH inner join USR_CODFAB  on USR_STMPDH_FABRIC = USR_CODFAB_CODIGO  where (USR_CODFAB_DESCRI  IS NOT NULL) And (USR_CODFAB_DESCRI COLLATE Latin1_General_CI_AI Like '%@TextoBusqueda%' )  ORDER BY CAST( USR_CODFAB_DESCRI  AS NVARCHAR(MAX)) ASC";
+                    string sql = "select concat(USR_CODFAB_DESCRI ,'- ', CAST(STMPDH_DESCRP AS NVARCHAR(MAX)) ,'- ', STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH inner join USR_CODFAB  on USR_STMPDH_FABRIC = USR_CODFAB_CODIGO  where (USR_CODFAB_DESCRI  IS NOT NULL) And (USR_CODFAB_DESCRI COLLATE Latin1_General_CI_AI Like '@TextoBusqueda' )  ORDER BY CAST( USR_CODFAB_DESCRI  AS NVARCHAR(MAX)) ASC";
                     PUMPCO.Execute(sql, new{TextoBusqueda = textoBusqueda}); 
                     _listaNombreProductos = PUMPCO.Query<string>(sql).ToList();
                 }
@@ -62,7 +61,7 @@ private static string _connectionString = @"Server=localhost; DataBase=PUMPCO;Tr
     //{
     //    using(SqlConnection PUMPCO = new SqlConnection(_connectionString))
     //    {
-    //        string sql = "select concat(STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (STMPDH_ARTCOD  IS NOT NULL)AND STMPDH_TIPPRO = '@Codigo' And (replace(replace ((STMPDH_ARTCOD COLLATE Latin1_General_CI_AI),'/',''),'-','' )Like '%@TextoBusqueda%' )  ORDER BY CAST( STMPDH_ARTCOD  AS NVARCHAR(MAX)) ASC ";
+    //        string sql = "select concat(STMPDH_TIPPRO ,'- ', CAST(STMPDH_ARTCOD AS NVARCHAR(MAX))) AS Nombre from STMPDH where (STMPDH_ARTCOD  IS NOT NULL)AND STMPDH_TIPPRO = '@Codigo' And (replace(replace ((STMPDH_ARTCOD COLLATE Latin1_General_CI_AI),'/',''),'-','' )Like '@TextoBusqueda' )  ORDER BY CAST( STMPDH_ARTCOD  AS NVARCHAR(MAX)) ASC ";
     //        PUMPCO.Execute(sql, new{Codigo = codigo, TextoBusqueda = textoBusqueda}); 
     //        _listaNombreProductos = PUMPCO.Query<string>(sql).ToList();
     //    }
