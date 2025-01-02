@@ -14,11 +14,17 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Index(int tipoBusqueda, string textoBusqueda, string codiCorto, string fabricanteNomb)
+    public IActionResult Index(int tipoBusqueda, string textoBusqueda, string codiCorto, string fabricanteNomb, string ProduSele)
     {
         ViewBag.ListaNombresProduBusqueda = BD.ListaBusquedaNombProdu(tipoBusqueda, "%" + textoBusqueda + "%", codiCorto);
-        ViewBag.Producto = null; //BD.ObtenerInfoCompletProdu(codigo); //obtener el codigo del orto de js
-        ViewBag.CountResEncont = null;
+        if(ProduSele != null)
+        {
+            var parts = ProduSele.Split('-');
+            var lastPart = parts[^1].Trim();
+            ViewBag.Producto = BD.ObtenerInfoCompletProdu(lastPart);
+        }
+        
+        ViewBag.CountResEncont = ViewBag.ListaNombresProduBusqueda.Count;
         return View();
     }
 
