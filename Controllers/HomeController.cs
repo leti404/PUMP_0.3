@@ -20,8 +20,9 @@ public class HomeController : Controller
         if(ProduSele != null)
         {
             var parts = ProduSele.Split('-');
-            var lastPart = parts[^1].Trim();
-            ViewBag.Producto = BD.ObtenerInfoCompletProdu(lastPart);
+            string secondLastPart = parts.Length >= 2 ? parts[^2].Trim() : null;
+            string lastPart = parts.Length >= 1 ? parts[^1].Trim() : null;
+            ViewBag.Producto = BD.ObtenerInfoCompletProdu(lastPart, secondLastPart);
         }
         else
         {

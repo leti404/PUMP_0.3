@@ -145,6 +145,13 @@ body {
   margin-bottom: 10px;
 }
 
+.for-sale {
+  color: #5fad50;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
 .placeholder {
   height: 120px;
   border: 2px dashed #0092d1;
