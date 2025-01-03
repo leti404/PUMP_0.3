@@ -23,7 +23,10 @@ public class HomeController : Controller
             var lastPart = parts[^1].Trim();
             ViewBag.Producto = BD.ObtenerInfoCompletProdu(lastPart);
         }
-        
+        else
+        {
+            ViewBag.Producto = null;
+        }
         ViewBag.CountResEncont = ViewBag.ListaNombresProduBusqueda.Count;
         return View();
     }

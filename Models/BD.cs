@@ -3,7 +3,7 @@ using System;
 using Dapper;
 using System.Data;
 public class BD{
-private static string _connectionString = @"Server=CONTROL\SQL_PUMP;database=PUMPCO;uid=Lectura;pwd=PublicUser102938*;Trusted_Connection=False;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=CONTROL\SQL_PUMP;database=PUMPCO;uid=Lectura;pwd=PublicUser102938*;Trusted_Connection=False;TrustServerCertificate=True;";
     public static List<string> _listaNombreProductos = new List<string>();
     public static List<string> ListaBusquedaNombProdu(int tipoBusqueda, string textoBusqueda, string codigo)
     {
@@ -75,13 +75,12 @@ private static string _connectionString = @"Server=CONTROL\SQL_PUMP;database=PUM
         return _listaCharTipoCod;
     }
     public static Producto productoUsuario;
-    public Producto ObtenerInfoCompletProdu(string codigo)
+    public static Producto ObtenerInfoCompletProdu(string codigo)
     {
         using(SqlConnection PUMPCO = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT P.STMPDH_ARTCOD AS CODIGO, P.STMPDH_INDCOD AS CODREDUCIDO, P.STMPDH_DESCRP AS DESCRIPCION, P.USR_STMPDH_CODFAB AS CODIGOFABRICANTE, P.STMPDH_TIPPRO AS TIPO, P.USR_STMPDH_NOTTEC AS NOMBFAB, F.USR_CODFAB_DESCRI AS CODIFAB, P.STMPDH_BMPBMP AS FOTO, P.USR_STMPDH_NOHABI AS APTOVENTA, SUM(S.STRMVK_STOCKS) AS STOCK FROM STMPDH AS P LEFT JOIN USR_CODFAB AS F ON P.USR_STMPDH_FABRIC = F.USR_CODFAB_CODIGO LEFT JOIN STRMVK AS S ON CAST(P.STMPDH_ARTCOD AS NVARCHAR(MAX)) = S.STRMVK_ARTCOD WHERE P.STMPDH_ARTCOD = @Codigo AND S.STRMVK_DEPOSI = 01 AND S.STRMVK_SECTOR = 0 GROUP BY P.STMPDH_ARTCOD, P.STMPDH_INDCOD, P.STMPDH_DESCRP, P.USR_STMPDH_CODFAB, P.STMPDH_TIPPRO, P.USR_STMPDH_NOTTEC, F.USR_CODFAB_DESCRI, P.STMPDH_BMPBMP, P.USR_STMPDH_NOHABI";
-            PUMPCO.Execute(sql, new{Codigo = codigo}); 
-            productoUsuario = PUMPCO.QueryFirstOrDefault<Producto>(sql, new { Codigo = codigo });
+            string sql = @"SELECT P.STMPDH_ARTCOD AS CODIGO, P.STMPDH_INDCOD AS CODREDUCIDO, P.STMPDH_DESCRP AS DESCRIPCION, P.USR_STMPDH_CODFAB AS CODIGOFABRICANTE, P.STMPDH_TIPPRO AS TIPO, P.USR_STMPDH_NOTTEC AS NOMBFAB, F.USR_CODFAB_DESCRI AS CODIFAB, P.STMPDH_BMPBMP AS FOTO, P.USR_STMPDH_NOHABI AS APTOVENTA, SUM(S.STRMVK_STOCKS) AS STOCK FROM STMPDH AS P LEFT JOIN USR_CODFAB AS F ON P.USR_STMPDH_FABRIC = F.USR_CODFAB_CODIGO LEFT JOIN STRMVK AS S ON CAST(P.STMPDH_ARTCOD AS NVARCHAR(MAX)) = S.STRMVK_ARTCOD WHERE P.STMPDH_ARTCOD = '" + codigo +"' AND S.STRMVK_DEPOSI = 01 AND S.STRMVK_SECTOR = 0 GROUP BY P.STMPDH_ARTCOD, P.STMPDH_INDCOD, P.STMPDH_DESCRP, P.USR_STMPDH_CODFAB, P.STMPDH_TIPPRO, P.USR_STMPDH_NOTTEC, F.USR_CODFAB_DESCRI, P.STMPDH_BMPBMP, P.USR_STMPDH_NOHABI";
+            productoUsuario = PUMPCO.QueryFirstOrDefault<Producto>(sql, new { Codigo = codigo});
         }
         return productoUsuario;
     }

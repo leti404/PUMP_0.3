@@ -28,12 +28,12 @@
         <label for="results">Resultados encontrados: @ViewBag.CountResEncont</label>
 
         <form method="post" action="@Url.Action("Index", "Home")">
-            <select id="results" name="selectedProduct" onchange="this.form.submit()">
+            <select id="results" name="ProduSele" onchange="this.form.submit()">
                 @if(ViewBag.ListaNombresProduBusqueda != null)
                 {
                     @foreach (string producto in ViewBag.ListaNombresProduBusqueda)
                     {
-                        <option value="@producto" name="ProduSele">@producto</option>
+                        <option value="@producto">@producto</option>
                     } 
                 }
                 else
