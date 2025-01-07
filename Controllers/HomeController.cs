@@ -28,7 +28,25 @@ public class HomeController : Controller
         {
             ViewBag.Producto = null;
         }
+        if(tipoBusqueda == 5)
+        {
+            ViewBag.ListaFabri = BD.ObtenerFabriListaBusqueda(textoBusqueda);
+            ViewBag.ListaMiniCod = null;
+        }
+        else if(tipoBusqueda == 2)
+        {
+            ViewBag.ListaMiniCod = BD.ObtenerListaCodigos();
+            ViewBag.ListaFabri = null;
+        }
+        else
+        {
+            ViewBag.ListaFabri = null;
+            ViewBag.ListaMiniCod = null;
+        }
+        
         ViewBag.CountResEncont = ViewBag.ListaNombresProduBusqueda.Count;
+        ViewBag.TextoBusqueda = textoBusqueda;
+        ViewBag.TipoBusqueda = tipoBusqueda;
         return View();
     }
 

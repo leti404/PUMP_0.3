@@ -84,4 +84,15 @@ public class BD{
         }
         return productoUsuario;
     }
+
+    public static List<string> ObtenerFabriListaBusqueda(string textoBusqueda)
+    {
+        List<string> fabri = new List<string>();
+        using(SqlConnection PUMPCO = new SqlConnection(_connectionString))
+        {
+            string sql = @"select USR_CODFAB_DESCRI AS Nombre from STMPDH inner join USR_CODFAB  on USR_STMPDH_FABRIC = USR_CODFAB_CODIGO  where (USR_CODFAB_DESCRI  IS NOT NULL) And (USR_CODFAB_DESCRI COLLATE Latin1_General_CI_AI Like '%" + textoBusqueda +"%' ) Group by USR_CODFAB_DESCRI   ORDER BY CAST( USR_CODFAB_DESCRI  AS NVARCHAR(MAX)) ASC ";
+            fabri = PUMPCO.Query<string>(sql).ToList();
+        }
+        return fabri;
+    }
 }

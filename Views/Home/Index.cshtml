@@ -3,18 +3,110 @@
     <form action='@Url.Action("Index")' method="post">
         <div class="seleccion" id="searchSelection">
             <label for="search-by">Buscar por:</label>
-            <select name="tipoBusqueda" class="inputdatos" id="search-by" onchange="toggleAdditionalFields()" required>
-                <option value="1" selected>Descripción</option>
-                <option value="2">Código</option>
-                <option value="3">Código Reducido</option>
-                <option value="4">Código del Fabricante</option>
-                <option value="5">Fabricante</option>
-            </select>
+            @switch (ViewBag.TipoBusqueda)
+            {
+                case 2:
+                    <select name="tipoBusqueda" class="inputdatos" id="search-by" onchange="toggleAdditionalFields()" required>
+                        <option value="1" >Descripción</option>
+                        <option value="2" selected>Código</option>
+                        <option value="3">Código Reducido</option>
+                        <option value="4">Código del Fabricante</option>
+                        <option value="5">Fabricante</option>
+                    </select>
+
+                    <div id="codigoFields">
+                        <label for="codiCorto">Código Corto:</label>
+                        <select name="codiCorto" class="inputdatos" id="codiCorto">
+                            <option value="" selected></option>
+                            @foreach (string MiniCod in BD.ObtenerListaCodigos())
+                            {
+                                <option value="@MiniCod">@MiniCod</option>
+                            }
+                        </select>
+                    </div>
+                break;
+                case 3:
+                    <select name="tipoBusqueda" class="inputdatos" id="search-by" onchange="toggleAdditionalFields()" required>
+                        <option value="1" >Descripción</option>
+                        <option value="2" >Código</option>
+                        <option value="3" selected>Código Reducido</option>
+                        <option value="4">Código del Fabricante</option>
+                        <option value="5">Fabricante</option>
+                    </select>
+                break;
+                case 4:
+                    <select name="tipoBusqueda" class="inputdatos" id="search-by" onchange="toggleAdditionalFields()" required>
+                        <option value="1" >Descripción</option>
+                        <option value="2" >Código</option>
+                        <option value="3">Código Reducido</option>
+                        <option value="4" selected>Código del Fabricante</option>
+                        <option value="5">Fabricante</option>
+                    </select>
+                break;
+                case 5:
+                    <select name="tipoBusqueda" class="inputdatos" id="search-by" onchange="toggleAdditionalFields()" required>
+                        <option value="1" >Descripción</option>
+                        <option value="2" >Código</option>
+                        <option value="3">Código Reducido</option>
+                        <option value="4">Código del Fabricante</option>
+                        <option value="5" selected>Fabricante</option>
+                    </select>
+                    <div id="fabricanteFields">
+                        <label for="fabricanteNomb">Fabricante:</label>
+                        <select name="fabricanteNomb" class="inputdatos" id="fabricanteNomb">
+                            @if(ViewBag.ListaFabri != null)
+                            {
+                                @foreach (string fabri in ViewBag.ListaFabri)
+                                {
+                                    <option value="@fabri">@fabri</option>
+                                }
+                            }
+
+                        </select>
+                    </div>
+                break;
+                default:
+                    <select name="tipoBusqueda" class="inputdatos" id="search-by" onchange="toggleAdditionalFields()" required>
+                        <option value="1" selected>Descripción</option>
+                        <option value="2">Código</option>
+                        <option value="3">Código Reducido</option>
+                        <option value="4">Código del Fabricante</option>
+                        <option value="5">Fabricante</option>
+                    </select>
+                break;
+            }
             
-            <div id="additionalFields"></div>
+
+            
+            <div id="additionalFieldsContainer" style="display: none;">
+                <div id="codigoFields">
+                    <label for="codiCorto">Código Corto:</label>
+                    <select name="codiCorto" class="inputdatos" id="codiCorto">
+                        <option value=" " selected></option>
+                        @foreach (string MiniCod in BD.ObtenerListaCodigos())
+                        {
+                            <option value="@MiniCod">@MiniCod</option>
+                        }
+                    </select>
+                </div>
+                <div id="fabricanteFields">
+                    <label for="fabricanteNomb">Fabricante:</label>
+                    <select name="fabricanteNomb" class="inputdatos" id="fabricanteNomb">
+                        @if(ViewBag.ListaFabri != null)
+                        {
+                            @foreach (string fabri in ViewBag.ListaFabri)
+                            {
+                                <option value="@fabri">@fabri</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+
             
             <label for="textoBusqueda">Palabras clave:</label>
-            <input name="textoBusqueda" type="text" class="inputdatos" id="textoBusqueda" placeholder="Palabras clave...">
+            <input name="textoBusqueda" type="text" class="inputdatos" id="textoBusqueda" placeholder="Palabras clave..." value="@ViewBag.TextoBusqueda">
             
             <div class="button-container">
                 <button type="submit" class="search-button">BUSCAR</button>
