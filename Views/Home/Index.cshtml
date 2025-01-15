@@ -118,8 +118,18 @@
 
     <div class="results-section">
         <label for="results">Resultados encontrados: @ViewBag.CountResEncont</label>
-
         <form method="post" action="@Url.Action("Index", "Home")">
+        <input type="hidden" name="tipoBusqueda" value="@ViewBag.TipoBusqueda">
+        <input type="hidden" name="textoBusqueda" value="@ViewBag.TextoBusqueda">
+        @if(ViewBag.TipoBusqueda == 2)
+        {
+            <input type="hidden" name="codiCorto" value="@ViewBag.MiniCod">
+        }
+        else if(ViewBag.TipoBusqueda == 5)
+        {
+            <input type="hidden" name="fabricanteNomb" value="@ViewBag.Fabri">
+        }
+
             <select id="results" name="ProduSele" onchange="this.form.submit()">
                 @if(ViewBag.ListaNombresProduBusqueda != null)
                 {
@@ -140,13 +150,12 @@
         
         @if (ViewBag.CountResEncont != null && ViewBag.CountResEncont > 0)
         {
-            <a href='@Url.Action("Tabla", "Home")'>
-                <button class="btn">TABLA</button>
-            </a>
+            <form action="@Url.Action("Tabla", "Home")" method="post">
+                <button class="btn small">TABLA</button>
+            </form>  
         }
 
     </div>
-
 
     @if(ViewBag.Producto != null)
     {
@@ -158,12 +167,17 @@
                 <div class="input-block">@ViewBag.Producto.CODIGO</div>
                 <label>Stock en Depósito</label>
                 <div class="input-block">@ViewBag.Producto.STOCK</div>
-                <button class="btn small">Formula</button>
-                <button class="btn small">Seg de Formula</button>
+                <form action="@Url.Action("Formula", "Home")" method="post">
+                    <button class="btn small">Formula</button>
+                </form>
+                <form action="@Url.Action("SeguimientoFormula", "Home")" method="post">
+                    <button class="btn small">Seg Formula</button>
+                </form>                
             </div>
             <div class="form-group">
                 <label>Descripción</label>
-                <div class="input-block">@ViewBag.Producto.DESCRIPCION --------- @ViewBag.Producto.DESCADI</div>
+                <div class="input-block">@ViewBag.Producto.DESCRIPCION</div>
+                <div class="input-block">@ViewBag.Producto.DESCADI</div>
             </div>
             <div class="form-group">
                 <label>Código del Fabricante</label>
@@ -177,21 +191,18 @@
 
         <div class="imgProdu">
             <img src="@ViewBag.Producto.FOTO" alt="@ViewBag.Producto.DESCRIPCION">
+            <img src="/Image/GetImage?@ViewBag.Producto.FOTO" alt="Product Image" height="500px" width="100px">
         </div>
 
         @if(ViewBag.Producto.APTOVENTA != null && ViewBag.Producto.APTOVENTA == 'N')
         {
             <div class="status-section">
                 <p class="not-for-sale">NO APTO PARA LA VENTA</p>
-                <div class="placeholder"></div>
             </div>
         }
         else if (ViewBag.Producto.APTOVENTA == 'S')
         {
-            <div class="status-section">
-                <p class="for-sale">APTO PARA LA VENTA</p>
-                <div class="placeholder"></div>
-            </div>
+            <p class="for-sale">APTO PARA LA VENTA</p>
         } 
     }
     else
@@ -204,15 +215,16 @@
                 <div class="input-block"></div>
                 <label>Stock en Depósito</label>
                 <div class="input-block"></div>
-                <button class="btn small">Formula</button>
-                <button class="btn small">Seg de Formula</button>
-            </div>
-            <div class="form-group">
-                <label>Código Reducido</label>
-                <div class="input-block"></div>
+                
+                    <button class="btn small">Formula</button>
+                
+                
+                    <button class="btn small">Seg Formula</button>
+                               
             </div>
             <div class="form-group">
                 <label>Descripción</label>
+                <div class="input-block"></div>
                 <div class="input-block"></div>
             </div>
             <div class="form-group">
@@ -227,14 +239,8 @@
 
         <div class="imgProdu">
             <img src="" alt="">
+            <img src="" alt="Product Image">
         </div>
-
-
-       <div class="status-section">
-           <p class="not-for-sale">NO APTO PARA LA VENTA</p>
-           <div class="placeholder"></div>
-       </div>
-     
     }
     
 </div>

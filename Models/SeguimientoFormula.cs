@@ -1,10 +1,10 @@
-public class SeguimeintoFormula{
-    public int tipo {get; set;}
-    public char codigo {get; set;}
-    public string formula {get; set;}
-    public string unidad {get; set;}
-    public int descripcion {get; set;}
-    public int codFab{get; set;}
-    public int stock {get; set;}
+public class SeguimientoFormula{
+    public string TIPO {get; set;}
+    public string CODIGO {get; set;}
+    public string FORMULA {get; set;}
+    public string UNIDAD {get; set;}
+    public double CANTIDAD {get; set;}
+    public string DESCRIPCION {get; set;}
+    public double STOCK {get; set;}
 
 }

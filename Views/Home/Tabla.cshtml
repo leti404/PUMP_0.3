@@ -8,80 +8,51 @@
       <th>TIPO</th>
       <th>CÓDIGO</th>
       <th>DESCRIPCIÓN</th>
-      <th>DESCRIPCIÓN COMP</th>
-      <th>CÓDIGO REDUCIDO</th>
+      <th>DESCRIPCIÓN ADI</th>
+      <th>NOMBRE FABRICANTE</th>
       <th>CÓDIGO FABRICANTE</th>
-      <th>FABRICANTE</th>
-      <th>STOCK</th>
       <th>FOTO</th>
+      <th>APTO VENTA</th>
+      <th>STOCK</th>
     </tr>
   </thead>
   <tbody>
-    @foreach(Producto producto in ViewBag.ListaProdTabla)
+    @if(ViewBag.ContTabla != null)
     {
-          <tr>
-            <th scope="row">1</th>
-            <td>@producto.CODIGO</td>
-            <td>@producto.DESCRIPCION</td>
-            <td>@producto.CODFAB</td>
-            <td>@producto.TIPO</td>
-            <td>@producto.NOMBFABRI</td>
-            <td>@producto.FOTO</td>
-            <td>@producto.APTOVENTA</td>
-            <td>@producto.STOCK</td>
-          </tr>
+      @foreach(Tabla producto in ViewBag.ContTabla)
+      {
+        <tr>
+          <td>@producto.TIPO</td>
+          <td>@producto.CODIGO</td>
+          <td>@producto.DESCRIPCION</td>
+          <td>@producto.DESCADI</td>
+          <td>@producto.NOMBFABRI</td>
+          <td>@producto.CODFAB</td>
+          <td>@producto.FOTO</td>
+          <td>@producto.APTOVENTA</td>
+          <td>@producto.STOCK</td>
+        </tr>
+      }      
     }
+    else 
+    {
+        <tr>
+          <th scope="row">1</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+    }
+
 
   </tbody>
 </table>
 
+<a href="@Url.Action("Index", "Home")" class="volver"> Volver </a>
 
 
-
-<!-- Include DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-
-<!-- Your existing table structure -->
-<table id="example" class="display">
-    <thead>
-        <tr>
-          <th>TIPO</th>
-          <th>CÓDIGO</th>
-          <th>DESCRIPCIÓN</th>
-          <th>DESCRIPCIÓN COMP</th>
-          <th>CÓDIGO REDUCIDO</th>
-          <th>CÓDIGO FABRICANTE</th>
-          <th>FABRICANTE</th>
-          <th>STOCK</th>
-          <th>FOTO</th>
-        </tr>
-    </thead>
-    <tbody>
-      @foreach(Producto producto in ViewBag.ListaProdTabla)
-      {
-          <tr>
-            <th scope="row">1</th>
-            <td>@producto.CODIGO</td>
-            <td>@producto.DESCRIPCION</td>
-            <td>@producto.CODFAB</td>
-            <td>@producto.TIPO</td>
-            <td>@producto.NOMBFABRI</td>
-            <td>@producto.FOTO</td>
-            <td>@producto.APTOVENTA</td>
-            <td>@producto.STOCK</td>
-          </tr>
-      }
-    </tbody>
-</table>
-
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Include DataTables JS -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-
-<!-- Initialize DataTables -->
-<script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    });
-</script>

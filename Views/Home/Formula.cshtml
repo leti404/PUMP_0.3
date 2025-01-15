@@ -1,0 +1,76 @@
+<div class="material-container">
+    <div class="material-header">
+        <form method="post" action="@Url.Action("Formula", "Home")">
+            <span>@ViewBag.Producto.TIPO</span>
+            <p>@ViewBag.Producto.CODIGO</p>
+            <label>FORMULA</label>
+            <select name="formulaSele">
+                @if(ViewBag.FormulaProdu != null)
+                {
+                    @foreach (string producto in ViewBag.FormulaProdu)
+                    {
+                        <option value="@producto">@producto</option>
+                    }  
+                }
+                else
+                {
+                    <option value=""></option>
+                }
+            </select>
+            <label>Multiplicador</label>
+            <input type="number" name="multiplicador" value="1">
+            <button type="submit">Calcular</button>
+        </form>
+    </div>
+   <div class="material-description">
+       <p>@ViewBag.Producto.DESCRIPCION</p>
+       <p>@ViewBag.Producto.DESCADI</p>
+   </div>
+   <table class="material-table">
+       <thead>
+           <tr>
+               <th>TIPO</th>
+               <th>CODIGO</th>
+               <th>FORMULA</th>
+               <th>UNIDAD</th>
+               <th>CANTIDAD</th>
+               <th>DESCRIPCION</th>
+               <th>REFERENCIA</th>
+               <th>STOCK</th>
+               <th>TOTAL</th>
+               <th>DIFERENCIA</th>
+           </tr>
+       </thead>
+       <tbody>
+            @if(ViewBag.FormulaDatos != null)
+            {
+                @foreach (Formula producto in ViewBag.FormulaDatos)
+                {
+                    <tr>
+                        <td>@producto.TIPO</td>
+                        <td>@producto.CODIGO</td>
+                        <td>@producto.FORMULA</td>
+                        <td>@producto.UNIDAD</td>
+                        <td>@producto.CANTIDAD</td>
+                        <td>@producto.DESCRIPCION</td>
+                        <td>@producto.REFERENCIA</td>
+                        <td>@producto.STOCK</td>
+                        <td>@producto.TOTAL</td>
+                        @if(producto.DIFERENCIA > 0)
+                        {
+                            <td class="material-differencePos">@producto.DIFERENCIA </td>
+                        }
+                        else if(producto.DIFERENCIA <= 0)
+                        {
+                            <td class="material-differenceNeg">@producto.DIFERENCIA </td>
+                        }
+                        
+                    </tr>
+                } 
+            }
+            
+       </tbody>
+   </table>
+</div>
+
+<a href="@Url.Action("Index", "Home")" class="volver"> Volver </a>
